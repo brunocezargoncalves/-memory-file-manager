@@ -1,0 +1,63 @@
+# Arquivos de build
+bin/
+obj/
+
+# Pastas de pacotes e testes
+testes/
+packages/
+*.nupkg
+*.snupkg
+
+# Logs e dados temporários do sistema
+*.log
+*.vs/
+.vscode/
+.vscode/*
+
+# Configurações do usuário
+*.user
+*.suo
+
+# Pastas do Visual Studio
+.vs/
+.vscode/
+
+# Arquivos de publicação
+publish/
+*.publishsettings
+
+# Configurações de build
+*.dbmdl
+*.opendb
+*.pfx
+*.publishsettings
+*.suo
+
+# Arquivos de dependências locais
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Arquivos gerados pelo sistema
+*.pdb
+*.exe
+*.dll
+*.pyc
+*.class
+
+# Configurações do Rider
+.idea/
+.idea/*
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.cache
+
+# Arquivos de backup
+*.bak
+*.swp
+*.orig
+
+# Arquivos de build do Mac
+.DS_Store
