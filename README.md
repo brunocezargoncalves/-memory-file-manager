@@ -1,6 +1,6 @@
 # 📂 MEMORY FILE ORGANIZER
 
-Organize automaticamente imagens `*.png`, `*.jpeg`, `*.jpg`, `*.gif` em pastas estruturadas por **ano** e **mês**, com base no nome dos arquivos.
+Organize automaticamente imagens `*.png`, `*.jpeg`, `*.jpg`, `*.gif`, `*.mov`, `*.mp4` em pastas estruturadas por **ano** e **mês**, com base no nome dos arquivos.
 
 ### 🚀 Funcionalidade:
 Exemplo: O arquivo `../2021-09-27 15.33.04.jpg` será automaticamente organizado para:
@@ -35,8 +35,7 @@ Além disso, a aplicação:
 
 1. Clone este repositório.
 2. Compile a aplicação console no Visual Studio ou com o SDK do .NET.
-3. Especifique o diretório que contém suas fotos e vídeos.
-4. Execute a aplicação e veja seus arquivos sendo organizados automaticamente!
+3. Execute a aplicação, especifique os diretório dos arquivos e veja seus arquivos sendo organizados automaticamente!
 
 ## 🤝 Contribuições
 
