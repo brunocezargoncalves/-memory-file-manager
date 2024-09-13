@@ -1,4 +1,8 @@
-﻿namespace MemoryFileManager
+﻿using System.Text.RegularExpressions;
+using System.Globalization;
+using System.Diagnostics.Tracing;
+
+namespace MemoryFileManager
 {
     class Program
     {
@@ -26,7 +30,7 @@
                 if (Directory.Exists(readingDirectory))
                 {
                     // Extensões de arquivo a serem listadas
-                    string[] extensions = new[] { "*.png", "*.jpeg", "*.jpg", "*.gif" };
+                    string[] extensions = new[] { "*.png", "*.jpeg", "*.jpg", "*.gif", "*.mp4", "*.3gp" };
 
                     // Percorra cada extensão e liste os arquivos do diretório pai
                     foreach (var extension in extensions)
@@ -73,8 +77,9 @@
             {
                 if (!String.IsNullOrEmpty(sourceDirectory) && !String.IsNullOrEmpty(fileName))
                 {
-                    int year = fileName.Length >= 4 && fileName[..3] != "IMG" && int.TryParse(fileName[..4], out int y1) ? y1 : // YYYY-MM-DD
-                               fileName.Length >= 9 && int.TryParse(fileName.AsSpan(5, 4), out int y2) ? y2 : 0; // IMG_-YYYYMMDD
+                    string dateOnlyNumbers = Regex.Replace(fileName, @"\D", "");
+
+                    int year = ExtractYearOrMonthFileName(dateOnlyNumbers.Length >= 8 ? dateOnlyNumbers[..8] : dateOnlyNumbers, "YEAR"); 
 
                     if (year > 1996 && year <= 2024)
                     {
@@ -105,8 +110,9 @@
             {
                 if (!String.IsNullOrEmpty(yearDirectory) && !String.IsNullOrEmpty(fileName))
                 {
-                    int month = fileName.Length >= 7 && fileName[..3] != "IMG" && int.TryParse(fileName.AsSpan(5, 2), out int m1) ? m1 : // YYYY-MM-DD
-                               fileName.Length >= 11 && int.TryParse(fileName.AsSpan(9, 2), out int m2) ? m2 : 0; // IMG_-YYYYMMDD
+                    string dateOnlyNumbers = Regex.Replace(fileName, @"\D", "");
+
+                    int month = ExtractYearOrMonthFileName(dateOnlyNumbers.Length >= 8 ? dateOnlyNumbers[..8] : dateOnlyNumbers, "MONTH");
 
                     string[] months = new string[]
                     {
@@ -180,6 +186,29 @@
                 throw new Exception($"Não foi possível excluir pastas vazias do diretório {readingDirectory}: {ex.Message}");
             }
         }
+
+        static int ExtractYearOrMonthFileName(string dateString, string yearOrMonth)
+        {
+            // YYYYMMDD
+            string pattern = @"^\d{4}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$";
+
+            if (Regex.IsMatch(dateString, pattern))
+            {
+                if (DateTime.TryParseExact(dateString, "yyyyMMdd", null, DateTimeStyles.None, out DateTime validDate))
+                {
+                    if (yearOrMonth == "YEAR")
+                    {
+                        return validDate.Year;
+                    }
+                    if (yearOrMonth == "MONTH")
+                    {
+                        return validDate.Month;
+                    }
+                }
+            }
+
+            return 0;
+        }        
 
         static string Log(string message, string logFilePath)
         {
